@@ -1,38 +1,38 @@
 exports.up = async function(knex) {
-  await knex.schema.createTable("Recipes", table => {
+  await knex.schema.createTable("recipes", table => {
     table.increment("id");
     table.string("RecipeName").notNullable();
   });
 
-  await knex.schema.createTable("Ingredients", table => {
+  await knex.schema.createTable("ingredients", table => {
     table.increment("id");
     table.string("IngredientName").notNullable();
   });
 
-  await knex.schema.createTable("Instructions", table => {
+  await knex.schema.createTable("instructions", table => {
     table.increment("id");
     table.string("steps").notNullable();
     table.integer("recipe_id");
     references("id")
-      .inTable("Recipes")
+      .inTable("recipes")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
   });
 
-  await knex.schema.createTable("Recipes_Ingredients", table => {
+  await knex.schema.createTable("recipes_ingredients", table => {
     table.float("IngredientsQty").notNullable();
     table
       .interger("recipe_id")
       .notNullable()
       .references("id")
-      .inTable("Recipes")
+      .inTable("recipes")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
     table
       .interger("ingredients_id")
       .notNullable()
       .references("id")
-      .inTable("Ingredients")
+      .inTable("ingredients")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
     table.primary(["recipe_id", "ingredients_id"]);
@@ -40,8 +40,8 @@ exports.up = async function(knex) {
 };
 
 exports.down = async function(knex) {
-  await knex.schema.dropTableIfExists("Recipes_Ingredients");
-  await knex.schema.dropTableIfExists("Instructions");
-  await knex.schema.dropTableIfExists("Ingredients");
-  await knex.schema.dropTableIfExists("Recipes");
+  await knex.schema.dropTableIfExists("recipes_ingredients");
+  await knex.schema.dropTableIfExists("instructions");
+  await knex.schema.dropTableIfExists("ingredients");
+  await knex.schema.dropTableIfExists("recipes");
 };

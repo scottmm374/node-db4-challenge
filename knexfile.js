@@ -7,6 +7,13 @@ module.exports = {
     connection: {
       filename: "./data/recipe.db3"
     },
+    migrations: {
+      directory: "./migrations"
+    },
+    seeds: {
+      directory: "./seeds"
+    },
+
     pool: {
       afterCreate: (conn, done) => {
         // runs after a connection is made to the sqlite engine

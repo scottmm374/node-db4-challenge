@@ -6,10 +6,15 @@ function getRecipes() {
 
 // function getShoppingList(recipes_id) {}
 
-// function getInstructions(recipe_id) {}
+function getInstructions(recipe_id) {
+  return db("instructions as i")
+    .join("recipes as r", "i.recipe_id", "r.id")
+    .where({ recipe_id })
+    .select("i.id", "i.recipe_id", "i.steps", "r.RecipeName");
+}
 
 module.exports = {
-  getRecipes
+  getRecipes,
   //   getShoppingList,
-  //   getInstructions
+  getInstructions
 };
